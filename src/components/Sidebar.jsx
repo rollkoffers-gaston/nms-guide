@@ -1,9 +1,7 @@
-import QuickSellCheck from './QuickSellCheck'
-
 const navItems = [
-  { id: 'missions', label: 'Missions', icon: '🎯' },
   { id: 'inventory', label: 'Inventory', icon: '🎒' },
   { id: 'money', label: 'Money Making', icon: '💰' },
+  { id: 'missions', label: 'Missions', icon: '🎯' },
   { id: 'ships', label: 'Ships', icon: '🚀' },
   { id: 'refiners', label: 'Refiner Recipes', icon: '⚗️' },
   { id: 'tips', label: 'Quick Tips', icon: '💡' },
@@ -13,13 +11,13 @@ function NavItem({ item, onClick, active }) {
   return (
     <button
       onClick={() => onClick(item.id)}
-      className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-left transition-all duration-200 group ${
+      className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all duration-200 group ${
         active
           ? 'bg-[#00e5ff]/15 border border-[#00e5ff]/40 text-[#00e5ff]'
           : 'text-slate-400 hover:text-[#00e5ff] hover:bg-[#00e5ff]/08'
       }`}
     >
-      <span className="text-base">{item.icon}</span>
+      <span className="text-lg">{item.icon}</span>
       <span className="text-sm font-medium">{item.label}</span>
       {active && (
         <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#00e5ff] animate-pulse-glow" />
@@ -69,8 +67,8 @@ export default function Sidebar({ open, onClose, scrollTo, activeSection }) {
         </div>
 
         {/* Navigation */}
-        <nav className="p-4 space-y-1">
-          <p className="text-[10px] font-bold text-slate-600 uppercase tracking-widest px-4 mb-2">Sections</p>
+        <nav className="p-4 flex-1 space-y-1">
+          <p className="text-[10px] font-bold text-slate-600 uppercase tracking-widest px-4 mb-3">Sections</p>
           {navItems.map(item => (
             <NavItem
               key={item.id}
@@ -81,19 +79,32 @@ export default function Sidebar({ open, onClose, scrollTo, activeSection }) {
           ))}
         </nav>
 
-        {/* Divider */}
-        <div className="mx-4 border-t border-[#00e5ff]/10" />
-
-        {/* Quick Sell Check */}
-        <div className="p-4 flex-1">
-          <QuickSellCheck />
+        {/* Verdict legend */}
+        <div className="mx-4 border-t border-[#00e5ff]/10 pt-4 pb-2">
+          <p className="text-[10px] font-bold text-slate-600 uppercase tracking-widest px-1 mb-3">Sell Check Legend</p>
+          <div className="space-y-2 px-1">
+            {[
+              { emoji: '🟢', label: 'SELL IT', desc: 'Trade items — sell now' },
+              { emoji: '🔴', label: 'NEVER SELL', desc: 'Quest/essential items' },
+              { emoji: '🟡', label: 'KEEP SOME', desc: 'Stock up, keep ~250-500' },
+              { emoji: '🔵', label: 'SELL EXCESS', desc: 'Keep 250, sell the rest' },
+            ].map(v => (
+              <div key={v.label} className="flex items-center gap-2">
+                <span className="text-base">{v.emoji}</span>
+                <div>
+                  <span className="text-[10px] font-bold text-slate-400">{v.label}</span>
+                  <span className="text-[10px] text-slate-600 ml-1">— {v.desc}</span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Footer */}
         <div className="p-4 border-t border-[#00e5ff]/10">
           <p className="text-[10px] text-slate-600 text-center">
             Made for Cedric 🚀<br />
-            <span className="text-[#00e5ff]/40">No Man's Sky Guide v1.0</span>
+            <span className="text-[#00e5ff]/40">No Man's Sky Guide v2.0</span>
           </p>
         </div>
       </aside>
